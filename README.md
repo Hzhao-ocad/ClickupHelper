@@ -88,7 +88,7 @@ ClickupHelper/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/ClickUpVoiceAssistant.git
+git clone https://github.com/Hzhao-ocad/ClickupHelper
 cd ClickUpVoiceAssistant
 ```
 
