@@ -1,0 +1,366 @@
+:root {
+  --primary: #7B68EE;
+  --primary-hover: #6A5ACD;
+  --success: #2ECC71;
+  --danger: #E74C3C;
+  --warning: #F39C12;
+  --bg: #F8F9FA;
+  --card-bg: #FFFFFF;
+  --text: #2C3E50;
+  --text-muted: #95A5A6;
+  --border: #E0E0E0;
+  --radius: 12px;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+#app {
+  width: 100%;
+  max-width: 600px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  padding: 24px 0;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+#workspace-indicator {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.view {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.view.active {
+  display: flex;
+}
+
+/* Mic button */
+.mic-button {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(123, 104, 238, 0.4);
+}
+
+.mic-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px rgba(123, 104, 238, 0.5);
+}
+
+.mic-button:active {
+  transform: scale(0.95);
+}
+
+.mic-button.recording {
+  background: var(--danger);
+  box-shadow: 0 4px 24px rgba(231, 76, 60, 0.5);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.5); }
+  50% { box-shadow: 0 0 0 20px rgba(231, 76, 60, 0); }
+}
+
+/* Recording indicator */
+.recording-indicator {
+  width: 16px;
+  height: 16px;
+  background: var(--danger);
+  border-radius: 50%;
+  animation: blink 0.8s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+#recording-timer {
+  font-size: 2rem;
+  font-weight: 300;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Spinner */
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+#processing-stage {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+/* Preview / Result cards */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card.create { border-left: 4px solid var(--primary); }
+.card.update { border-left: 4px solid var(--warning); }
+.card.success { border-left: 4px solid var(--success); }
+.card.failure { border-left: 4px solid var(--danger); }
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.card-type {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.card-type.create { background: #EDE9FE; color: var(--primary); }
+.card-type.update { background: #FFF3E0; color: var(--warning); }
+.card-type.success { background: #E8F8F5; color: var(--success); }
+.card-type.failure { background: #FDEBEB; color: var(--danger); }
+
+.card-summary {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.card-params {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.card-params span {
+  display: inline-block;
+  margin-right: 12px;
+}
+
+/* Preview actions */
+.preview-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Clarify */
+.clarify-question {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  width: 100%;
+}
+
+.clarify-question label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.clarify-question select,
+.clarify-question input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+/* Waveform */
+#waveform-canvas {
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.03);
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Transcript review */
+.transcript-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+#transcript-text {
+  width: 100%;
+  max-width: 500px;
+  padding: 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+#transcript-text:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.transcript-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Error view */
+#error-content {
+  background: var(--card-bg);
+  border-left: 4px solid var(--danger);
+  border-radius: var(--radius);
+  padding: 20px;
+  width: 100%;
+}
+
+/* Idle input area */
+#idle-input-area {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#idle-transcript-input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-family: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+
+#idle-transcript-input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.idle-input-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  #app {
+    padding: 16px;
+  }
+  .mic-button {
+    width: 80px;
+    height: 80px;
+  }
+  header h1 {
+    font-size: 1.25rem;
+  }
+}

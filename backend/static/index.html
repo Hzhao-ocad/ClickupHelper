@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClickUp Voice Assistant</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>ClickUp Voice Assistant</h1>
+      <span id="workspace-indicator"></span>
+    </header>
+    <main>
+      <div id="view-idle" class="view active">
+        <button id="mic-button" class="mic-button" title="Hold to record">
+          <svg viewBox="0 0 24 24" width="48" height="48">
+            <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path fill="currentColor" d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          </svg>
+        </button>
+        <p>Press and hold to speak</p>
+        <div id="idle-input-area">
+          <textarea id="idle-transcript-input" rows="5" placeholder="Type your request or record audio..."></textarea>
+          <div class="idle-input-actions">
+            <button id="idle-submit" class="btn btn-primary" disabled>Send</button>
+            <button id="idle-clear" class="btn btn-secondary" style="display:none;">Clear</button>
+          </div>
+        </div>
+      </div>
+      <div id="view-recording" class="view">
+        <canvas id="waveform-canvas" width="300" height="80"></canvas>
+        <div class="recording-indicator"></div>
+        <span id="recording-timer">0:00</span>
+        <p>Release to send</p>
+      </div>
+      <div id="view-processing" class="view">
+        <div class="spinner"></div>
+        <p id="processing-stage">Processing...</p>
+      </div>
+      <div id="view-preview" class="view">
+        <h2>Confirm Operations</h2>
+        <div id="preview-cards"></div>
+        <div class="preview-actions">
+          <button id="approve-all" class="btn btn-primary">Approve All</button>
+          <button id="cancel-preview" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+      <div id="view-clarify" class="view">
+        <h2>Need a few details</h2>
+        <div id="clarify-cards"></div>
+        <button id="clarify-submit" class="btn btn-primary">Submit</button>
+      </div>
+      <div id="view-result" class="view">
+        <h2>Results</h2>
+        <div id="result-cards"></div>
+        <button id="new-recording" class="btn btn-primary">New Recording</button>
+      </div>
+      <div id="view-error" class="view">
+        <div id="error-content"></div>
+        <button id="error-retry" class="btn btn-primary">Retry</button>
+      </div>
+    </main>
+  </div>
+  <script src="/js/audio-recorder.js"></script>
+  <script src="/js/api-client.js"></script>
+  <script src="/js/ui-manager.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
